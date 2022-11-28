@@ -15,7 +15,7 @@ export const defaultTheme = {
     'BASE-TEXT': '#574F4D',
     'BASE-LABEL': '#8D8686',
 
-    PURLE: '#8047F8',
+    PURPLE: '#8047F8',
     'PURPLE-DARK': '#4B2995',
     'PURPLE-LIGHT': '#EBE5F9',
 
