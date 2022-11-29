@@ -1,30 +1,114 @@
 import React from 'react'
 
 import {
+  CoffeDescription,
+  CoffeFooter,
+  CoffeItemList,
+  CoffeList,
+  CoffeListContainer,
+  CoffeName,
+  CoffeSpecification,
+  CoffeSpecificationContainer,
   HomeIntro,
-  IntroInfo,
   IntroItems,
   IntroSubTitle,
   IntroTitle,
+  ItemList,
+  ListTitle,
+  Symbol,
 } from './styles'
 
-import image from '../../assets/title-image.png'
+import { IconList } from '../../components/IconList'
+import {
+  Coffee,
+  IconContext,
+  Package,
+  ShoppingCart,
+  Timer,
+} from 'phosphor-react'
+import { useTheme } from 'styled-components'
+import { CoffeCard } from '../../components/CoffeCard'
+import { coffes } from './coffes'
 
 export const Home: React.FC = () => {
+  const theme = useTheme()
   return (
-    <HomeIntro>
-      <IntroInfo>
-        <IntroTitle>
-          Encontre o café perfeito para qualquer hora do dia
-        </IntroTitle>
-        <IntroSubTitle>
-          Com o Coffee Delivery você recebe seu café onde estiver, a qualquer
-          hora
-        </IntroSubTitle>
-
-        <IntroItems></IntroItems>
-      </IntroInfo>
-      <img src={image} alt="Imagem de introdução" />
-    </HomeIntro>
+    <main>
+      <HomeIntro>
+        <div>
+          <IntroTitle>
+            Encontre o café perfeito para qualquer hora do dia
+          </IntroTitle>
+          <IntroSubTitle>
+            Com o Coffee Delivery você recebe seu café onde estiver, a qualquer
+            hora
+          </IntroSubTitle>
+          <IconContext.Provider
+            value={{
+              color: theme.COLORS.WHITE,
+              size: 16,
+              weight: 'fill',
+            }}
+          >
+            <IntroItems>
+              <ItemList>
+                <IconList bgColor="YELLOW-DARK">
+                  <ShoppingCart />
+                </IconList>
+                Compra simples e segura
+              </ItemList>
+              <ItemList>
+                <IconList bgColor="BASE-TEXT">
+                  <Package />
+                </IconList>
+                Embalagem mantém o café intacto
+              </ItemList>
+              <ItemList>
+                <IconList bgColor="YELLOW">
+                  <Timer />
+                </IconList>
+                Entrega rápida e rastreada
+              </ItemList>
+              <ItemList>
+                <IconList bgColor="PURPLE">
+                  <Coffee />
+                </IconList>
+                O café chega fresquinho até você
+              </ItemList>
+            </IntroItems>
+          </IconContext.Provider>
+        </div>
+        <img src="public/assets/title-image.png" alt="Imagem de introdução" />
+      </HomeIntro>
+      <CoffeListContainer>
+        <ListTitle>Nossos cafés</ListTitle>
+        <CoffeList>
+          {coffes.map((coffe) => (
+            <CoffeCard key={coffe.name}>
+              <CoffeItemList>
+                <img
+                  src={coffe.image}
+                  alt={`${coffe.name} imagem`}
+                  width={120}
+                  height={120}
+                />
+                <CoffeSpecificationContainer>
+                  {coffe.specifications.map((specification) => (
+                    <CoffeSpecification key={specification}>
+                      {specification}
+                    </CoffeSpecification>
+                  ))}
+                </CoffeSpecificationContainer>
+                <CoffeName>{coffe.name}</CoffeName>
+                <CoffeDescription>{coffe.description}</CoffeDescription>
+                <CoffeFooter>
+                  <Symbol>R$</Symbol>
+                </CoffeFooter>
+              </CoffeItemList>
+            </CoffeCard>
+          ))}
+        </CoffeList>
+      </CoffeListContainer>
+    </main>
   )
 }

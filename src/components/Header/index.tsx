@@ -8,12 +8,10 @@ import {
   LocationIcon,
 } from './styles'
 
-import logo from '../../assets/logo.svg'
-
 export const Header = () => {
   return (
     <HeaderContainer>
-      <img src={logo} alt="" />
+      <img src="public/assets/logo.svg" alt="" />
       <Actions>
         <LocationContainer>
           <LocationIcon />

@@ -8,6 +8,8 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
+    display: flex;
+    justify-content: center;
     background: ${({ theme }) => theme.COLORS.BACKGROUND};
     color: ${({ theme }) => theme.COLORS['BASE-TEXT']};
     -webkit-font-smoothin: antialiased;
@@ -17,5 +19,9 @@ export const GlobalStyle = createGlobalStyle`
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
     font-size: 1rem;
+  }
+
+  #root {
+    max-width: 1440px;
   }
 `

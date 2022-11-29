@@ -3,9 +3,16 @@ import styled from 'styled-components'
 
 export const HeaderContainer = styled.div`
   width: 100%;
+  position: sticky;
+  top: 0;
+
+  z-index: 999;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  background-color: ${({ theme }) => theme.COLORS.BACKGROUND};
 
   padding: 2rem 10rem;
 `
