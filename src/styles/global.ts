@@ -23,5 +23,6 @@ export const GlobalStyle = createGlobalStyle`
 
   #root {
     max-width: 1440px;
+    min-width: 1440px;
   }
 `

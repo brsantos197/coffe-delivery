@@ -3,7 +3,6 @@ import styled from 'styled-components'
 export const HomeContainer = styled.main`
   margin-bottom: 10rem;
 `
-
 export const HomeIntro = styled.div`
   width: 100%;
   height: 544px;
@@ -12,7 +11,6 @@ export const HomeIntro = styled.div`
   gap: 3.5rem;
   background-image: url('public/assets/home-background.png');
 `
-
 export const IntroTitle = styled.h1`
   font-family: '${({ theme }) => theme.FONTS.HEADER.FAMILY}', sans-serif;
   font-size: ${({ theme }) => theme.FONTS.HEADER.SIZES.XL}px;
@@ -21,7 +19,6 @@ export const IntroTitle = styled.h1`
 
   color: ${({ theme }) => theme.COLORS['BASE-TITLE']};
 `
-
 export const IntroSubTitle = styled.h2`
   font-family: '${({ theme }) => theme.FONTS.TEXT.FAMILY}', sans-serif;
   font-size: ${({ theme }) => theme.FONTS.TEXT.SIZES.XL}px;
@@ -32,7 +29,6 @@ export const IntroSubTitle = styled.h2`
 
   color: ${({ theme }) => theme.COLORS['BASE-SUBTITLE']};
 `
-
 export const IntroItems = styled.div`
   display: grid;
   grid-template-columns: auto auto;
@@ -48,7 +44,6 @@ export const ItemList = styled.div`
 export const CoffeListContainer = styled.div`
   padding: 2rem 10rem 0 10rem;
 `
-
 export const ListTitle = styled.h3`
   font-family: '${({ theme }) => theme.FONTS.HEADER.FAMILY}', sans-serif;
   font-size: ${({ theme }) => theme.FONTS.HEADER.SIZES.LG}px;
@@ -91,7 +86,6 @@ export const CoffeName = styled.h4`
 
   color: ${({ theme }) => theme.COLORS['BASE-SUBTITLE']};
 `
-
 export const CoffeSpecificationContainer = styled.div`
   display: flex;
   align-items: center;
@@ -99,7 +93,6 @@ export const CoffeSpecificationContainer = styled.div`
   gap: 0.25rem;
   margin-bottom: 1rem;
 `
-
 export const CoffeSpecification = styled.span`
   display: flex;
   align-items: center;
@@ -114,7 +107,6 @@ export const CoffeSpecification = styled.span`
   font-weight: 700;
   line-height: ${({ theme }) => theme.FONTS.TEXT.LINE_HEIGHT[130]}%;
 `
-
 export const CoffeDescription = styled.p`
   font-family: '${({ theme }) => theme.FONTS.TEXT.FAMILY}', sans-serif;
   font-size: ${({ theme }) => theme.FONTS.TEXT.SIZES.SM}px;
@@ -125,7 +117,6 @@ export const CoffeDescription = styled.p`
 
   color: ${({ theme }) => theme.COLORS['BASE-LABEL']};
 `
-
 export const CoffeFooter = styled.div`
   display: flex;
   align-items: center;
@@ -133,7 +124,6 @@ export const CoffeFooter = styled.div`
   gap: 1.5rem;
   text-align: right;
 `
-
 export const Symbol = styled.span`
   font-family: '${({ theme }) => theme.FONTS.TEXT.FAMILY}', sans-serif;
   font-size: ${({ theme }) => theme.FONTS.TEXT.SIZES.SM}px;
@@ -156,7 +146,6 @@ export const CoffeActions = styled.div`
   justify-content: center;
   gap: 0.5rem;
 `
-
 export const AddToCartButton = styled.button`
   display: flex;
   align-items: center;

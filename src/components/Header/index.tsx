@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom'
 import {
   Actions,
   CartButton,
@@ -11,16 +12,20 @@ import {
 export const Header = () => {
   return (
     <HeaderContainer>
-      <img src="public/assets/logo.svg" alt="" />
+      <NavLink to="/">
+        <img src="public/assets/logo.svg" alt="" />
+      </NavLink>
       <Actions>
         <LocationContainer>
           <LocationIcon />
           Santos, SP
         </LocationContainer>
-        <CartButton>
-          <CartIcon />
-          <CartCount>3</CartCount>
-        </CartButton>
+        <NavLink to="/checkout">
+          <CartButton>
+            <CartIcon />
+            <CartCount>3</CartCount>
+          </CartButton>
+        </NavLink>
       </Actions>
     </HeaderContainer>
   )
