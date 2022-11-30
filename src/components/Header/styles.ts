@@ -52,6 +52,8 @@ export const CartButton = styled.button`
   border: 0;
   border-radius: 6px;
 
+  cursor: pointer;
+
   background-color: ${({ theme }) => theme.COLORS['YELLOW-LIGHT']};
 `
 export const CartIcon = styled(ShoppingCart).attrs(({ theme }) => ({

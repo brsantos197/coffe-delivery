@@ -1,6 +1,8 @@
 import React from 'react'
 
 import {
+  AddToCartButton,
+  CoffeActions,
   CoffeDescription,
   CoffeFooter,
   CoffeItemList,
@@ -9,12 +11,14 @@ import {
   CoffeName,
   CoffeSpecification,
   CoffeSpecificationContainer,
+  HomeContainer,
   HomeIntro,
   IntroItems,
   IntroSubTitle,
   IntroTitle,
   ItemList,
   ListTitle,
+  Price,
   Symbol,
 } from './styles'
 
@@ -29,11 +33,12 @@ import {
 import { useTheme } from 'styled-components'
 import { CoffeCard } from '../../components/CoffeCard'
 import { coffes } from './coffes'
+import { Counter } from '../../components/Counter'
 
 export const Home: React.FC = () => {
   const theme = useTheme()
   return (
-    <main>
+    <HomeContainer>
       <HomeIntro>
         <div>
           <IntroTitle>
@@ -102,13 +107,22 @@ export const Home: React.FC = () => {
                 <CoffeName>{coffe.name}</CoffeName>
                 <CoffeDescription>{coffe.description}</CoffeDescription>
                 <CoffeFooter>
-                  <Symbol>R$</Symbol>
+                  <div>
+                    <Symbol>R$ </Symbol>
+                    <Price>{coffe.price}</Price>
+                  </div>
+                  <CoffeActions>
+                    <Counter quantity={coffe.quantity} />
+                    <AddToCartButton>
+                      <ShoppingCart size={22} weight="fill" />
+                    </AddToCartButton>
+                  </CoffeActions>
                 </CoffeFooter>
               </CoffeItemList>
             </CoffeCard>
           ))}
         </CoffeList>
       </CoffeListContainer>
-    </main>
+    </HomeContainer>
   )
 }

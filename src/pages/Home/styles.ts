@@ -1,5 +1,9 @@
 import styled from 'styled-components'
 
+export const HomeContainer = styled.main`
+  margin-bottom: 10rem;
+`
+
 export const HomeIntro = styled.div`
   width: 100%;
   height: 544px;
@@ -65,7 +69,7 @@ export const CoffeItemList = styled.div`
   height: 310px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-end;
   position: relative;
   padding: 1.25rem;
 
@@ -78,11 +82,12 @@ export const CoffeItemList = styled.div`
   }
 `
 export const CoffeName = styled.h4`
-  margin-top: -0.75rem;
   font-family: '${({ theme }) => theme.FONTS.HEADER.FAMILY}', sans-serif;
   font-size: ${({ theme }) => theme.FONTS.HEADER.SIZES.SM}px;
   line-height: ${({ theme }) => theme.FONTS.HEADER.LINE_HEIGHT}%;
   font-weight: 700;
+
+  margin-bottom: 0.5rem;
 
   color: ${({ theme }) => theme.COLORS['BASE-SUBTITLE']};
 `
@@ -92,8 +97,7 @@ export const CoffeSpecificationContainer = styled.div`
   align-items: center;
   justify-content: center;
   gap: 0.25rem;
-
-  margin-top: 5rem;
+  margin-bottom: 1rem;
 `
 
 export const CoffeSpecification = styled.span`
@@ -112,16 +116,23 @@ export const CoffeSpecification = styled.span`
 `
 
 export const CoffeDescription = styled.p`
-  margin-top: -0.75rem;
   font-family: '${({ theme }) => theme.FONTS.TEXT.FAMILY}', sans-serif;
   font-size: ${({ theme }) => theme.FONTS.TEXT.SIZES.SM}px;
   line-height: ${({ theme }) => theme.FONTS.TEXT.LINE_HEIGHT}%;
   font-weight: 400;
 
+  margin-bottom: 2rem;
+
   color: ${({ theme }) => theme.COLORS['BASE-LABEL']};
 `
 
-export const CoffeFooter = styled.div``
+export const CoffeFooter = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  text-align: right;
+`
 
 export const Symbol = styled.span`
   font-family: '${({ theme }) => theme.FONTS.TEXT.FAMILY}', sans-serif;
@@ -130,4 +141,34 @@ export const Symbol = styled.span`
   font-weight: 400;
 
   color: ${({ theme }) => theme.COLORS['BASE-TEXT']};
+`
+export const Price = styled.span`
+  font-family: '${({ theme }) => theme.FONTS.HEADER.FAMILY}', sans-serif;
+  font-size: ${({ theme }) => theme.FONTS.HEADER.SIZES.MD}px;
+  line-height: ${({ theme }) => theme.FONTS.HEADER.LINE_HEIGHT}%;
+  font-weight: 400;
+
+  color: ${({ theme }) => theme.COLORS['BASE-TEXT']};
+`
+export const CoffeActions = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+`
+
+export const AddToCartButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border: 0;
+  border-radius: 6px;
+  background-color: ${({ theme }) => theme.COLORS['PURPLE-DARK']};
+  color: ${({ theme }) => theme.COLORS.WHITE};
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.COLORS.PURPLE};
+  }
 `
