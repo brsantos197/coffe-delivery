@@ -67,8 +67,10 @@ export const CoffeItemList = styled.div`
   justify-content: flex-end;
   position: relative;
   padding: 1.25rem;
-
   text-align: center;
+
+  background-color: ${({ theme }) => theme.COLORS['BASE-CARD']};
+  border-radius: 6px 44px;
 
   img {
     position: absolute;

@@ -9,7 +9,6 @@ import {
 } from 'phosphor-react'
 import React from 'react'
 import { useTheme } from 'styled-components'
-import { CoffeCard } from '../../components/CoffeCard'
 import { Counter } from '../../components/Counter'
 import { coffes } from '../Home/coffes'
 
@@ -114,67 +113,65 @@ export const Checkout: React.FC = () => {
 
       <CheckoutCardContainer>
         <CardTitle>Cafés selecionados</CardTitle>
-        <CoffeCard>
-          <CartContainer>
-            <CartItem>
-              <ItemDetails>
-                <img
-                  src={coffes[0].image}
-                  alt={`${coffes[0].name} imagem`}
-                  width={64}
-                  height={64}
-                />
-                <div>
-                  <ItemName>{coffes[0].name}</ItemName>
-                  <RowCart>
-                    <Counter quantity={coffes[0].quantity} />
-                    <RemoveButton>
-                      <Trash size={16} color={theme.COLORS.PURPLE} /> Remover
-                    </RemoveButton>
-                  </RowCart>
-                </div>
-              </ItemDetails>
-              <CartItemPrice>R$ {coffes[0].price}</CartItemPrice>
-            </CartItem>
-            <Divider />
-            <CartItem>
-              <ItemDetails>
-                <img
-                  src={coffes[5].image}
-                  alt={`${coffes[5].name} imagem`}
-                  width={64}
-                  height={64}
-                />
-                <div>
-                  <ItemName>{coffes[5].name}</ItemName>
-                  <RowCart>
-                    <Counter quantity={coffes[5].quantity} />
-                    <RemoveButton>
-                      <Trash size={16} color={theme.COLORS.PURPLE} /> Remover
-                    </RemoveButton>
-                  </RowCart>
-                </div>
-              </ItemDetails>
-              <CartItemPrice>R$ {coffes[5].price}</CartItemPrice>
-            </CartItem>
-            <Divider />
-            <CartFooter>
-              <RowCartFooter>
-                <p>Total</p>
-                <span>R$ 13,80</span>
-              </RowCartFooter>
-              <RowCartFooter>
-                <p>Entrega</p>
-                <span>R$ 5,00</span>
-              </RowCartFooter>
-              <RowCartFooterTotal>
-                <p>Total</p>
-                <span>R$ 18,80</span>
-              </RowCartFooterTotal>
-            </CartFooter>
-            <ConfirmButton>confirmar pedido</ConfirmButton>
-          </CartContainer>
-        </CoffeCard>
+        <CartContainer>
+          <CartItem>
+            <ItemDetails>
+              <img
+                src={coffes[0].image}
+                alt={`${coffes[0].name} imagem`}
+                width={64}
+                height={64}
+              />
+              <div>
+                <ItemName>{coffes[0].name}</ItemName>
+                <RowCart>
+                  <Counter quantity={coffes[0].quantity} />
+                  <RemoveButton>
+                    <Trash size={16} color={theme.COLORS.PURPLE} /> Remover
+                  </RemoveButton>
+                </RowCart>
+              </div>
+            </ItemDetails>
+            <CartItemPrice>R$ {coffes[0].price}</CartItemPrice>
+          </CartItem>
+          <Divider />
+          <CartItem>
+            <ItemDetails>
+              <img
+                src={coffes[5].image}
+                alt={`${coffes[5].name} imagem`}
+                width={64}
+                height={64}
+              />
+              <div>
+                <ItemName>{coffes[5].name}</ItemName>
+                <RowCart>
+                  <Counter quantity={coffes[5].quantity} />
+                  <RemoveButton>
+                    <Trash size={16} color={theme.COLORS.PURPLE} /> Remover
+                  </RemoveButton>
+                </RowCart>
+              </div>
+            </ItemDetails>
+            <CartItemPrice>R$ {coffes[5].price}</CartItemPrice>
+          </CartItem>
+          <Divider />
+          <CartFooter>
+            <RowCartFooter>
+              <p>Total</p>
+              <span>R$ 13,80</span>
+            </RowCartFooter>
+            <RowCartFooter>
+              <p>Entrega</p>
+              <span>R$ 5,00</span>
+            </RowCartFooter>
+            <RowCartFooterTotal>
+              <p>Total</p>
+              <span>R$ 18,80</span>
+            </RowCartFooterTotal>
+          </CartFooter>
+          <ConfirmButton>confirmar pedido</ConfirmButton>
+        </CartContainer>
       </CheckoutCardContainer>
     </CheckoutContainer>
   )

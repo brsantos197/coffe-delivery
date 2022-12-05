@@ -174,6 +174,9 @@ export const CartContainer = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   padding: 2.5rem;
+
+  background-color: ${({ theme }) => theme.COLORS['BASE-CARD']};
+  border-radius: 6px 36px;
 `
 export const CartItem = styled.div`
   display: flex;

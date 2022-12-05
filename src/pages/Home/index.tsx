@@ -31,7 +31,6 @@ import {
   Timer,
 } from 'phosphor-react'
 import { useTheme } from 'styled-components'
-import { CoffeCard } from '../../components/CoffeCard'
 import { coffes } from './coffes'
 import { Counter } from '../../components/Counter'
 
@@ -89,37 +88,35 @@ export const Home: React.FC = () => {
         <ListTitle>Nossos cafés</ListTitle>
         <CoffeList>
           {coffes.map((coffe) => (
-            <CoffeCard key={coffe.name}>
-              <CoffeItemList>
-                <img
-                  src={coffe.image}
-                  alt={`${coffe.name} imagem`}
-                  width={120}
-                  height={120}
-                />
-                <CoffeSpecificationContainer>
-                  {coffe.specifications.map((specification) => (
-                    <CoffeSpecification key={specification}>
-                      {specification}
-                    </CoffeSpecification>
-                  ))}
-                </CoffeSpecificationContainer>
-                <CoffeName>{coffe.name}</CoffeName>
-                <CoffeDescription>{coffe.description}</CoffeDescription>
-                <CoffeFooter>
-                  <div>
-                    <Symbol>R$ </Symbol>
-                    <Price>{coffe.price}</Price>
-                  </div>
-                  <CoffeActions>
-                    <Counter quantity={coffe.quantity} />
-                    <AddToCartButton>
-                      <ShoppingCart size={22} weight="fill" />
-                    </AddToCartButton>
-                  </CoffeActions>
-                </CoffeFooter>
-              </CoffeItemList>
-            </CoffeCard>
+            <CoffeItemList key={coffe.name}>
+              <img
+                src={coffe.image}
+                alt={`${coffe.name} imagem`}
+                width={120}
+                height={120}
+              />
+              <CoffeSpecificationContainer>
+                {coffe.specifications.map((specification) => (
+                  <CoffeSpecification key={specification}>
+                    {specification}
+                  </CoffeSpecification>
+                ))}
+              </CoffeSpecificationContainer>
+              <CoffeName>{coffe.name}</CoffeName>
+              <CoffeDescription>{coffe.description}</CoffeDescription>
+              <CoffeFooter>
+                <div>
+                  <Symbol>R$ </Symbol>
+                  <Price>{coffe.price}</Price>
+                </div>
+                <CoffeActions>
+                  <Counter quantity={coffe.quantity} />
+                  <AddToCartButton>
+                    <ShoppingCart size={22} weight="fill" />
+                  </AddToCartButton>
+                </CoffeActions>
+              </CoffeFooter>
+            </CoffeItemList>
           ))}
         </CoffeList>
       </CoffeListContainer>
