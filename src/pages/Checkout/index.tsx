@@ -170,7 +170,7 @@ export const Checkout: React.FC = () => {
               <span>R$ 18,80</span>
             </RowCartFooterTotal>
           </CartFooter>
-          <ConfirmButton>confirmar pedido</ConfirmButton>
+          <ConfirmButton to="/success">confirmar pedido</ConfirmButton>
         </CartContainer>
       </CheckoutCardContainer>
     </CheckoutContainer>

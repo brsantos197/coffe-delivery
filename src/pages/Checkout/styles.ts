@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 
 interface ButtonPaymentSelectProps {
@@ -236,7 +237,7 @@ export const CartFooter = styled.div`
   gap: 0.75rem;
   margin-bottom: 1.5rem;
 `
-export const ConfirmButton = styled.button`
+export const ConfirmButton = styled(NavLink)`
   width: 100%;
   display: flex;
   align-items: center;
@@ -252,6 +253,8 @@ export const ConfirmButton = styled.button`
   background-color: ${({ theme }) => theme.COLORS.YELLOW};
   color: ${({ theme }) => theme.COLORS.WHITE};
   text-transform: uppercase;
+
+  text-decoration: none;
 
   &:hover {
     background-color: ${({ theme }) => theme.COLORS['YELLOW-DARK']};
