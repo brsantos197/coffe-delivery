@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
 import {
   AddToCartButton,
@@ -31,10 +31,11 @@ import {
   Timer,
 } from 'phosphor-react'
 import { useTheme } from 'styled-components'
-import { coffes } from './coffes'
 import { Counter } from '../../components/Counter'
+import { CoffeContext } from '../../context/CoffeContext.ctx'
 
 export const Home: React.FC = () => {
+  const { coffes, addCoffeToCart } = useContext(CoffeContext)
   const theme = useTheme()
   return (
     <HomeContainer>
@@ -107,11 +108,15 @@ export const Home: React.FC = () => {
               <CoffeFooter>
                 <div>
                   <Symbol>R$ </Symbol>
-                  <Price>{coffe.price}</Price>
+                  <Price>
+                    {(coffe.price * coffe.quantity)
+                      .toFixed(2)
+                      .replaceAll('.', ',')}
+                  </Price>
                 </div>
                 <CoffeActions>
-                  <Counter quantity={coffe.quantity} />
-                  <AddToCartButton>
+                  <Counter coffeId={coffe.id} quantity={coffe.quantity} />
+                  <AddToCartButton onClick={() => addCoffeToCart(coffe)}>
                     <ShoppingCart size={22} weight="fill" />
                   </AddToCartButton>
                 </CoffeActions>

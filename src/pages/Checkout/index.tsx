@@ -7,10 +7,10 @@ import {
   Money,
   Trash,
 } from 'phosphor-react'
-import React from 'react'
+import React, { useContext } from 'react'
 import { useTheme } from 'styled-components'
 import { Counter } from '../../components/Counter'
-import { coffes } from '../Home/coffes'
+import { CoffeContext } from '../../context/CoffeContext.ctx'
 
 import {
   CardTitle,
@@ -44,8 +44,15 @@ import {
   ConfirmButton,
 } from './styles'
 
-export const Checkout: React.FC = () => {
+export const Checkout = () => {
+  const { cart } = useContext(CoffeContext)
   const theme = useTheme()
+
+  const taxDelivery = 5
+  const totalCart = cart.coffes.reduce(
+    (total, coffe) => (total += coffe.price * coffe.quantity),
+    0,
+  )
   return (
     <CheckoutContainer>
       <CheckoutCardContainer>
@@ -114,60 +121,70 @@ export const Checkout: React.FC = () => {
       <CheckoutCardContainer>
         <CardTitle>Cafés selecionados</CardTitle>
         <CartContainer>
-          <CartItem>
-            <ItemDetails>
-              <img
-                src={coffes[0].image}
-                alt={`${coffes[0].name} imagem`}
-                width={64}
-                height={64}
-              />
-              <div>
-                <ItemName>{coffes[0].name}</ItemName>
-                <RowCart>
-                  <Counter quantity={coffes[0].quantity} />
-                  <RemoveButton>
-                    <Trash size={16} color={theme.COLORS.PURPLE} /> Remover
-                  </RemoveButton>
-                </RowCart>
-              </div>
-            </ItemDetails>
-            <CartItemPrice>R$ {coffes[0].price}</CartItemPrice>
-          </CartItem>
-          <Divider />
-          <CartItem>
-            <ItemDetails>
-              <img
-                src={coffes[5].image}
-                alt={`${coffes[5].name} imagem`}
-                width={64}
-                height={64}
-              />
-              <div>
-                <ItemName>{coffes[5].name}</ItemName>
-                <RowCart>
-                  <Counter quantity={coffes[5].quantity} />
-                  <RemoveButton>
-                    <Trash size={16} color={theme.COLORS.PURPLE} /> Remover
-                  </RemoveButton>
-                </RowCart>
-              </div>
-            </ItemDetails>
-            <CartItemPrice>R$ {coffes[5].price}</CartItemPrice>
-          </CartItem>
-          <Divider />
+          {cart.coffes.length
+            ? cart.coffes.map((coffe) => (
+                <div key={coffe.id}>
+                  <CartItem>
+                    <ItemDetails>
+                      <img
+                        src={coffe.image}
+                        alt={`${coffe.name} imagem`}
+                        width={64}
+                        height={64}
+                      />
+                      <div>
+                        <ItemName>{coffe.name}</ItemName>
+                        <RowCart>
+                          <Counter
+                            coffeId={coffe.id}
+                            quantity={coffe.quantity}
+                            type="cart"
+                          />
+                          <RemoveButton>
+                            <Trash size={16} color={theme.COLORS.PURPLE} />{' '}
+                            Remover
+                          </RemoveButton>
+                        </RowCart>
+                      </div>
+                    </ItemDetails>
+                    <CartItemPrice>
+                      {new Intl.NumberFormat('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL',
+                      }).format(coffe.price * coffe.quantity)}
+                    </CartItemPrice>
+                  </CartItem>
+                  <Divider />
+                </div>
+              ))
+            : null}
           <CartFooter>
             <RowCartFooter>
               <p>Total</p>
-              <span>R$ 13,80</span>
+              <span>
+                {new Intl.NumberFormat('pt-BR', {
+                  style: 'currency',
+                  currency: 'BRL',
+                }).format(totalCart)}
+              </span>
             </RowCartFooter>
             <RowCartFooter>
               <p>Entrega</p>
-              <span>R$ 5,00</span>
+              <span>
+                {new Intl.NumberFormat('pt-BR', {
+                  style: 'currency',
+                  currency: 'BRL',
+                }).format(taxDelivery)}
+              </span>
             </RowCartFooter>
             <RowCartFooterTotal>
               <p>Total</p>
-              <span>R$ 18,80</span>
+              <span>
+                {new Intl.NumberFormat('pt-BR', {
+                  style: 'currency',
+                  currency: 'BRL',
+                }).format(taxDelivery + totalCart)}
+              </span>
             </RowCartFooterTotal>
           </CartFooter>
           <ConfirmButton to="/success">confirmar pedido</ConfirmButton>

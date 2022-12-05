@@ -1,4 +1,6 @@
+import { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
+import { CoffeContext } from '../../context/CoffeContext.ctx'
 import {
   Actions,
   CartButton,
@@ -10,6 +12,7 @@ import {
 } from './styles'
 
 export const Header = () => {
+  const { cart } = useContext(CoffeContext)
   return (
     <HeaderContainer>
       <NavLink to="/">
@@ -23,7 +26,13 @@ export const Header = () => {
         <NavLink to="/checkout">
           <CartButton>
             <CartIcon />
-            <CartCount>3</CartCount>
+            {cart.coffes.length ? (
+              <CartCount>
+                {cart.coffes.reduce((length, coffe) => {
+                  return (length += coffe.quantity)
+                }, 0)}
+              </CartCount>
+            ) : null}
           </CartButton>
         </NavLink>
       </Actions>

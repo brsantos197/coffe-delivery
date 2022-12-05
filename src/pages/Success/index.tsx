@@ -12,7 +12,7 @@ import {
   SuccessTitle,
 } from './styles'
 
-export const Success: React.FC = () => {
+export const Success = () => {
   const theme = useTheme()
   return (
     <SuccessContainer>
