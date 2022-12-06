@@ -5,12 +5,16 @@ import {
   IconContext,
   MapPinLine,
   Money,
+  ShoppingCart,
   Trash,
 } from 'phosphor-react'
-import React, { useContext } from 'react'
+import { useContext } from 'react'
+import { useForm } from 'react-hook-form'
 import { useTheme } from 'styled-components'
 import { Counter } from '../../components/Counter'
 import { CoffeContext } from '../../context/CoffeContext.ctx'
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as zod from 'zod'
 
 import {
   CardTitle,
@@ -42,19 +46,71 @@ import {
   RowCartFooter,
   RowCartFooterTotal,
   ConfirmButton,
+  EmptyCartMessage,
+  EmptyCartMessageContainer,
 } from './styles'
+import { useNavigate } from 'react-router-dom'
+
+const newAddressFormValidationSchema = zod.object({
+  cep: zod
+    .string()
+    .regex(/(\d{5})-\d{3}/, 'Insira um CEP válido')
+    .length(9),
+  street: zod.string(),
+  number: zod.string(),
+  complement: zod.string(),
+  district: zod.string(),
+  city: zod.string(),
+  state: zod
+    .string()
+    .min(2)
+    .max(2)
+    .transform((val) => val.toUpperCase()),
+  formPayment: zod.string(),
+})
+
+export type AddressFormData = zod.infer<typeof newAddressFormValidationSchema>
 
 export const Checkout = () => {
-  const { cart } = useContext(CoffeContext)
+  const { cart, removeCoffeCart, clearCart } = useContext(CoffeContext)
   const theme = useTheme()
+
+  const navigate = useNavigate()
+
+  const { register, handleSubmit, watch, reset } = useForm<AddressFormData>({
+    resolver: zodResolver(newAddressFormValidationSchema),
+    defaultValues: {
+      cep: '',
+      city: '',
+      complement: '',
+      district: '',
+      formPayment: 'credit',
+      number: '',
+      state: '',
+      street: '',
+    },
+  })
+
+  const formPayment = watch('formPayment')
 
   const taxDelivery = 5
   const totalCart = cart.coffes.reduce(
     (total, coffe) => (total += coffe.price * coffe.quantity),
     0,
   )
+
+  const handleRegisterAddress = (data: any) => {
+    localStorage.setItem('@coffe-delivery:address-1.0.0', JSON.stringify(data))
+    reset()
+    navigate('/success')
+    clearCart()
+  }
+
   return (
-    <CheckoutContainer>
+    <CheckoutContainer
+      id="addressForm"
+      onSubmit={handleSubmit(handleRegisterAddress)}
+    >
       <CheckoutCardContainer>
         <CardTitle>Complete seu pedido</CardTitle>
         <CheckoutCard>
@@ -68,19 +124,26 @@ export const Checkout = () => {
             </div>
           </FormHeader>
           <FormContainer>
-            <BaseInput placeholder="CEP" />
-            <AddressInput placeholder="Rua" />
+            <BaseInput placeholder="CEP" {...register('cep')} />
+            <AddressInput placeholder="Rua" {...register('street')} required />
             <Row>
-              <BaseInput placeholder="Número" />
+              <BaseInput placeholder="Número" {...register('number')} />
               <OptionalInputContainer>
-                <OptionalInput placeholder="Complemento" />
+                <OptionalInput
+                  placeholder="Complemento"
+                  {...register('complement')}
+                />
                 <OptionalInputLabel>Opcional</OptionalInputLabel>
               </OptionalInputContainer>
             </Row>
             <Row>
-              <BaseInput placeholder="Bairro" />
-              <CityInput placeholder="Cidade" />
-              <StateInput placeholder="UF" />
+              <BaseInput
+                placeholder="Bairro"
+                {...register('district')}
+                required
+              />
+              <CityInput placeholder="Cidade" {...register('city')} required />
+              <StateInput placeholder="UF" {...register('state')} required />
             </Row>
           </FormContainer>
         </CheckoutCard>
@@ -101,29 +164,44 @@ export const Checkout = () => {
               </div>
             </FormHeader>
             <Row>
-              <ButtonPaymentSelect>
+              <ButtonPaymentSelect active={formPayment === 'credit'}>
                 <CreditCard />
+                <input
+                  type="radio"
+                  value="credit"
+                  {...register('formPayment')}
+                />
                 <p>cartão de crédito</p>
               </ButtonPaymentSelect>
-              <ButtonPaymentSelect>
+              <ButtonPaymentSelect active={formPayment === 'debit'}>
                 <Bank />
+                <input
+                  type="radio"
+                  value="debit"
+                  {...register('formPayment')}
+                />
                 <p>cartão de débito</p>
               </ButtonPaymentSelect>
-              <ButtonPaymentSelect active>
+              <ButtonPaymentSelect active={formPayment === 'money'}>
                 <Money />
+                <input
+                  type="radio"
+                  value="money"
+                  {...register('formPayment')}
+                />
                 <p>dinheiro</p>
               </ButtonPaymentSelect>
             </Row>
           </IconContext.Provider>
         </CheckoutCard>
       </CheckoutCardContainer>
-
       <CheckoutCardContainer>
         <CardTitle>Cafés selecionados</CardTitle>
         <CartContainer>
-          {cart.coffes.length
-            ? cart.coffes.map((coffe) => (
-                <div key={coffe.id}>
+          {cart.coffes.length ? (
+            <>
+              {cart.coffes.map((coffe, index) => (
+                <div key={`${coffe.id}-${index}`}>
                   <CartItem>
                     <ItemDetails>
                       <img
@@ -136,11 +214,14 @@ export const Checkout = () => {
                         <ItemName>{coffe.name}</ItemName>
                         <RowCart>
                           <Counter
-                            coffeId={coffe.id}
+                            coffeId={index}
                             quantity={coffe.quantity}
                             type="cart"
                           />
-                          <RemoveButton>
+                          <RemoveButton
+                            type="button"
+                            onClick={() => removeCoffeCart(index)}
+                          >
                             <Trash size={16} color={theme.COLORS.PURPLE} />{' '}
                             Remover
                           </RemoveButton>
@@ -156,38 +237,46 @@ export const Checkout = () => {
                   </CartItem>
                   <Divider />
                 </div>
-              ))
-            : null}
-          <CartFooter>
-            <RowCartFooter>
-              <p>Total</p>
-              <span>
-                {new Intl.NumberFormat('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                }).format(totalCart)}
-              </span>
-            </RowCartFooter>
-            <RowCartFooter>
-              <p>Entrega</p>
-              <span>
-                {new Intl.NumberFormat('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                }).format(taxDelivery)}
-              </span>
-            </RowCartFooter>
-            <RowCartFooterTotal>
-              <p>Total</p>
-              <span>
-                {new Intl.NumberFormat('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                }).format(taxDelivery + totalCart)}
-              </span>
-            </RowCartFooterTotal>
-          </CartFooter>
-          <ConfirmButton to="/success">confirmar pedido</ConfirmButton>
+              ))}
+              <CartFooter>
+                <RowCartFooter>
+                  <p>Total</p>
+                  <span>
+                    {new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    }).format(totalCart)}
+                  </span>
+                </RowCartFooter>
+                <RowCartFooter>
+                  <p>Entrega</p>
+                  <span>
+                    {new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    }).format(taxDelivery)}
+                  </span>
+                </RowCartFooter>
+                <RowCartFooterTotal>
+                  <p>Total</p>
+                  <span>
+                    {new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    }).format(taxDelivery + totalCart)}
+                  </span>
+                </RowCartFooterTotal>
+              </CartFooter>
+              <ConfirmButton type="submit" form="addressForm">
+                confirmar pedido
+              </ConfirmButton>
+            </>
+          ) : (
+            <EmptyCartMessageContainer>
+              <ShoppingCart size={72} />
+              <EmptyCartMessage>Carrinho Vazio</EmptyCartMessage>
+            </EmptyCartMessageContainer>
+          )}
         </CartContainer>
       </CheckoutCardContainer>
     </CheckoutContainer>

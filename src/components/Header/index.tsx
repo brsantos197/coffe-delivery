@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
 import { CoffeContext } from '../../context/CoffeContext.ctx'
+import { AddressFormData } from '../../pages/Checkout'
 import {
   Actions,
   CartButton,
@@ -13,6 +14,9 @@ import {
 
 export const Header = () => {
   const { cart } = useContext(CoffeContext)
+  const address: AddressFormData = JSON.parse(
+    localStorage.getItem('@coffe-delivery:address-1.0.0') as string,
+  )
   return (
     <HeaderContainer>
       <NavLink to="/">
@@ -21,7 +25,9 @@ export const Header = () => {
       <Actions>
         <LocationContainer>
           <LocationIcon />
-          Santos, SP
+          {address?.city && address?.state
+            ? `${address?.city}, ${address?.state}`
+            : null}
         </LocationContainer>
         <NavLink to="/checkout">
           <CartButton>

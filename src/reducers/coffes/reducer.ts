@@ -30,9 +30,10 @@ export const coffesReducer = (state: CoffesState, action: any) => {
     case ActionTypes.UPDATE_COFFE_QUANTITY:
       if (action.payload.quantity > 0) {
         return produce(state, (draft) => {
-          const coffe = (
-            action.payload.type === 'list' ? draft.coffes : draft.cart.coffes
-          ).find((c) => c.id === action.payload.coffeId)
+          const coffe =
+            action.payload.type === 'list'
+              ? draft.coffes.find((c) => c.id === action.payload.coffeId)
+              : draft.cart.coffes[action.payload.coffeId]
           if (coffe) {
             coffe.quantity = action.payload.quantity
           }
@@ -40,6 +41,14 @@ export const coffesReducer = (state: CoffesState, action: any) => {
       } else {
         return { ...state }
       }
+    case ActionTypes.REMOVE_ITEM_COFFE:
+      return produce(state, (draft) => {
+        draft.cart.coffes.splice(action.payload.coffeCartId, 1)
+      })
+    case ActionTypes.CLEAR_CART:
+      return produce(state, (draft) => {
+        draft.cart.coffes = []
+      })
     default:
       return state
   }

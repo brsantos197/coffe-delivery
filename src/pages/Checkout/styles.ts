@@ -5,7 +5,7 @@ interface ButtonPaymentSelectProps {
   active?: boolean
 }
 
-export const CheckoutContainer = styled.div`
+export const CheckoutContainer = styled.form`
   display: flex;
   align-items: flex-start;
   gap: 2rem;
@@ -23,6 +23,7 @@ export const CardTitle = styled.h3`
 
 export const CheckoutCardContainer = styled.div`
   display: flex;
+  flex: 1;
   flex-direction: column;
   align-items: flex-start;
   gap: 0.75rem;
@@ -56,7 +57,7 @@ export const FormSubTitle = styled.p`
   font-size: ${({ theme }) => theme.FONTS.TEXT.SIZES.SM}px;
   line-height: ${({ theme }) => theme.FONTS.TEXT.LINE_HEIGHT[130]}%;
 `
-export const FormContainer = styled.form`
+export const FormContainer = styled.div`
   min-width: 35rem;
   display: flex;
   flex-direction: column;
@@ -142,7 +143,7 @@ export const CityInput = styled(BaseInput)`
 export const StateInput = styled(BaseInput)`
   width: 3.75rem;
 `
-export const ButtonPaymentSelect = styled.button<ButtonPaymentSelectProps>`
+export const ButtonPaymentSelect = styled.label<ButtonPaymentSelectProps>`
   display: flex;
   flex: 1;
   align-items: center;
@@ -150,7 +151,7 @@ export const ButtonPaymentSelect = styled.button<ButtonPaymentSelectProps>`
   padding: 1rem;
 
   border: ${({ theme, active }) =>
-    active ? `1px solid ${theme.COLORS.PURPLE}` : 0};
+    active ? `1px solid ${theme.COLORS.PURPLE}` : '1px solid transparent'};
   border-radius: 6px;
 
   background-color: ${({ theme, active }) =>
@@ -162,6 +163,9 @@ export const ButtonPaymentSelect = styled.button<ButtonPaymentSelectProps>`
       !active && theme.COLORS['BASE-HOVER']};
   }
 
+  input[type='radio'] {
+    display: none;
+  }
   p {
     text-transform: uppercase;
     font-size: ${({ theme }) => theme.FONTS.TEXT.SIZES.XS}px;
@@ -237,7 +241,7 @@ export const CartFooter = styled.div`
   gap: 0.75rem;
   margin-bottom: 1.5rem;
 `
-export const ConfirmButton = styled(NavLink)`
+export const ConfirmButton = styled.button`
   width: 100%;
   display: flex;
   align-items: center;
@@ -254,9 +258,20 @@ export const ConfirmButton = styled(NavLink)`
   color: ${({ theme }) => theme.COLORS.WHITE};
   text-transform: uppercase;
 
-  text-decoration: none;
-
   &:hover {
     background-color: ${({ theme }) => theme.COLORS['YELLOW-DARK']};
   }
+`
+export const EmptyCartMessageContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  color: ${({ theme }) => theme.COLORS['BASE-LABEL']};
+`
+
+export const EmptyCartMessage = styled.span`
+  font-size: ${({ theme }) => theme.FONTS.TEXT.SIZES.XXL}px;
+  font-weight: 700;
 `

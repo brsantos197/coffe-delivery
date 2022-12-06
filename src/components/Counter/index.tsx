@@ -14,6 +14,7 @@ export const Counter = ({ quantity, coffeId, type = 'list' }: CounterProps) => {
   return (
     <CounterContainer>
       <ButtonIcon
+        type="button"
         onClick={() => {
           updateCoffeQuantity(coffeId, (quantity -= 1), type)
         }}
@@ -22,6 +23,7 @@ export const Counter = ({ quantity, coffeId, type = 'list' }: CounterProps) => {
       </ButtonIcon>
       <Quantity>{quantity}</Quantity>
       <ButtonIcon
+        type="button"
         onClick={() => {
           updateCoffeQuantity(coffeId, (quantity += 1), type)
         }}

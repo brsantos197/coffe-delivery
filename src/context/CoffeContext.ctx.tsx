@@ -1,6 +1,8 @@
-import { createContext, ReactNode, useReducer } from 'react'
+import { createContext, ReactNode, useEffect, useReducer } from 'react'
 import {
   addCoffeToCartAction,
+  clearCartAction,
+  removeCoffeCartAction,
   updateCoffeQuantityAction,
 } from '../reducers/coffes/actions'
 import { Cart, coffesReducer, CoffeType } from '../reducers/coffes/reducer'
@@ -14,6 +16,8 @@ interface CoffeContextType {
     quantity: number,
     type: 'list' | 'cart',
   ) => void
+  removeCoffeCart: (coffeCartId: number) => void
+  clearCart: () => void
 }
 
 interface CoffeContextProviderProps {
@@ -179,6 +183,33 @@ export const CoffeContextProvider = ({
     dispatch(updateCoffeQuantityAction(coffeId, quantity, type))
   }
 
+  const removeCoffeCart = (coffeCartId: number) => {
+    dispatch(removeCoffeCartAction(coffeCartId))
+  }
+
+  const clearCart = () => {
+    dispatch(clearCartAction())
+  }
+
+  useEffect(() => {
+    const defaultAddress = JSON.stringify({
+      cep: '',
+      city: '',
+      complement: '',
+      district: '',
+      formPayment: 'credit',
+      number: '',
+      state: '',
+      street: '',
+    })
+
+    const address = localStorage.getItem('@coffe-delivery:address-1.0.0')
+
+    if (!address) {
+      localStorage.setItem('@coffe-delivery:address-1.0.0', defaultAddress)
+    }
+  }, [])
+
   return (
     <CoffeContext.Provider
       value={{
@@ -186,6 +217,8 @@ export const CoffeContextProvider = ({
         cart: coffesState.cart,
         addCoffeToCart,
         updateCoffeQuantity,
+        removeCoffeCart,
+        clearCart,
       }}
     >
       {children}
